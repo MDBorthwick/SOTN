@@ -1,0 +1,72 @@
+require("ggplot2")
+library("ggplot2") 
+library("tidyverse")
+library("dplyr") # data preparation
+
+#Total stats on animals, from DEFRA June survey 2023 -www.gov.uk/government/statistical-data-sets/structure-of-the-agricultural-industry-in-england-and-the-uk-at-june
+total.chickens.2023<-279399774 
+total.layers.2023<-40245799
+total.broilers.2023<-(total.chickens.2023-total.layers.2023)
+total.cattle.2022<-9631892 
+total.pigs.2022<-5191917
+
+#RSPCA source: Assured Annual Review 2022
+rspca.laying.hens<-0.5087
+rspca.broilers<-0.019
+rspca.pigs<-0.236
+rspca.beef<-0.001
+rspca.dairy<-0.009
+rspca.cattle<-(rspca.beef+rspca.dairy)
+
+#organic stats from statistica https://www.statista.com/statistics/299055/organic-livestock-numbers-in-the-united-kingdom-uk-by-type/
+organic.pigs<-(35000/total.pigs.2022*100)
+organic.cattle<-(298600/total.cattle.2022*100)
+organic.poultry<-(3664900/total.chickens.2023*100)
+
+#Legal minimum numbers for Annie
+stat.lm.poultry<-(100-organic.poultry-rspca.broilers-rspca.laying.hens)
+stat.lm.cattle<-(100-organic.cattle-rspca.cattle)
+stat.lm.pigs<-(100-organic.pigs-rspca.pigs)
+print(stat.lm.poultry)
+print(stat.lm.cattle)
+print(stat.lm.pigs)
+
+
+#Data for chicken graph
+cn.organic<-3664900
+cn.rspca<-(1501453+20474308)
+cn.national<-(total.chickens.2023-pn.organic-pn.rspca)
+cn.vector<-c(cn.organic,cn.rspca,cn.national)
+print(cn.organic)
+print(cn.rspca)
+print(cn.national)
+print(cn.vector)
+
+
+#Data for pig graph
+pn.organic<-35000
+pn.rspca<-1230160
+pn.national<-(5191917-pn.rspca-pn.organic)
+pn.vector<-c(pn.organic,pn.rspca,pn.national)
+print(pn.organic)
+print(pn.rspca)
+print(pn.national)
+print(pn.vector)
+
+#Data for cattle graph
+mn.organic<-298600
+mn.rspca<-(1572+17036)
+mn.national<-(total.cattle.2022-mn.rspca-mn.organic)
+mn.vector<-c(mn.organic,mn.rspca,mn.national)
+print(mn.organic)
+print(mn.rspca)
+print(mn.national)
+print(mn.vector)
+
+#Chart
+head(SOTN)
+str(SOTN)
+DF<-data.frame(SOTN)
+DF.P<-unlist(DF[1,])
+DF.C<-unlist(DF[2,])
+DF.S<-unlist(DF[3,])
